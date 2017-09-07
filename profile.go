@@ -21,8 +21,15 @@ type Profile struct {
 
 // GetProfile fetches the recipient's profile from facebook platform
 // Non empty UserID has to be specified in order to receive the information
-func (p *Profile) GetProfile(userID string, accessToken string) error {
-	resp, err := p.doRequest("GET", fmt.Sprintf(GraphAPI+"/v2.6/%s?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", userID, accessToken), nil)
+func (p *Profile) GetProfile(userID string, accessToken string, url string) error {
+	getURL := url
+	parameters := "fields=first_name,last_name,profile_pic,locale,timezone,gender"
+	if url == "" {
+		getURL = fmt.Sprintf(GraphAPI+"/v2.6/%s?%s&access_token=%s", userID, parameters, accessToken)
+	} else {
+		getURL = fmt.Sprintf(url+"/%s?%s&access_token=%s", userID, parameters, accessToken)
+	}
+	resp, err := p.doRequest("GET", getURL, nil)
 	if err != nil {
 		return err
 	}

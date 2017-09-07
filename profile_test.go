@@ -29,7 +29,7 @@ func TestGetProfile(t *testing.T) {
 
 	setClient(200, body)
 	prof := Profile{}
-	err = prof.GetProfile("123", "321")
+	err = prof.GetProfile("123", "321", "")
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,7 +46,7 @@ func TestGetProfile(t *testing.T) {
 	}
 	setClient(400, body)
 	prof2 := Profile{}
-	err = prof2.GetProfile("123", "321")
+	err = prof2.GetProfile("123", "321", "")
 	if err.Error() != "Error occured: "+errorData.Error.Message {
 		t.Error("Invalid error parsing")
 	}
