@@ -30,6 +30,7 @@ type Recipient struct {
 
 // NotificationType describes the behavior phone will execute after receiving the message
 type NotificationType string
+type MessagingType string
 
 const (
 	// NotificationTypeRegular will emit a sound/vibration and a phone notification
@@ -38,6 +39,14 @@ const (
 	NotificationTypeSilentPush NotificationType = "SILENT_PUSH"
 	// NotificationTypeNoPush will not emit sound/vibration nor a phone notification
 	NotificationTypeNoPush NotificationType = "NO_PUSH"
+	// MessagingTypeResponse described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeResponse MessagingType = "RESPONSE"
+	// MessagingTypeUpdate described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeUpdate MessagingType = "UPDATE"
+	// MessagingTypeMessageTag described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeMessageTag MessagingType = "MESSAGE_TAG"
+	// MessagingTypeNonPromotionalSubscription described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeNonPromotionalSubscription MessagingType = "NON_PROMOTIONAL_SUBSCRIPTION"
 )
 
 type MessageQuery struct {
@@ -45,4 +54,5 @@ type MessageQuery struct {
 	Message          *SendMessage     `json:"message,omitempty"`
 	NotificationType NotificationType `json:"notification_type,omitempty"`
 	Action           SenderAction     `json:"sender_action,omitempty"`
+	MessagingType    MessagingType    `json:"messaging_type,omitempty"`
 }
