@@ -11,6 +11,7 @@ const (
 	AttachmentTypeImage    AttachmentType = "image"
 	AttachmentTypeVideo    AttachmentType = "video"
 	AttachmentTypeAudio    AttachmentType = "audio"
+	AttachmentTypeFile     AttachmentType = "file"
 	AttachmentTypeLocation AttachmentType = "location"
 )
 
