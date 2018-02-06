@@ -1,5 +1,11 @@
 package messenger
 
+// UpstreamEvent represents messenger's incoming format
+type UpstreamEvent struct {
+	Object  string          `json:"object"`
+	Entries []*MessageEvent `json:"entry"`
+}
+
 // Event represents a Webhook postback event.
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference#format
 type Event struct {
