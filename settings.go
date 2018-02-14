@@ -5,9 +5,14 @@ import (
 	"errors"
 )
 
-// DefaultLocale is a const to set default locale...
-const DefaultLocale = "default"
-const PersistentMenuButtonLimit = 3
+// Settings constants
+const (
+	DefaultLocale             = "default"
+	PersistentMenuButtonLimit = 3
+	CTATypePostback           = "postback"
+	CTATypeURL                = "postback"
+	CTATypeNested             = "nested"
+)
 
 // Settings is the implementation of https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api
 // https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/account-linking-url
