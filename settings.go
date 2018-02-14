@@ -10,7 +10,7 @@ const (
 	DefaultLocale             = "default"
 	PersistentMenuButtonLimit = 3
 	CTATypePostback           = "postback"
-	CTATypeURL                = "postback"
+	CTATypeURL                = "web_url"
 	CTATypeNested             = "nested"
 )
 
