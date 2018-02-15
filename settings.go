@@ -1,7 +1,6 @@
 package messenger
 
 import (
-	"encoding/json"
 	"errors"
 )
 
@@ -138,10 +137,10 @@ type PersistentMenu struct {
 
 // CTA is a menu item
 type CTA struct {
-	Title              string          `json:"title"`
-	Type               string          `json:"type"`
-	URL                *string         `json:"url,omitempty"`
-	WebviewHeightRatio *string         `json:"webview_height_ratio,omitempty"`
-	Payload            json.RawMessage `json:"payload,omitempty"`
-	CTAs               []CTA           `json:"call_to_actions,omitempty"`
+	Title              string  `json:"title"`
+	Type               string  `json:"type"`
+	URL                *string `json:"url,omitempty"`
+	WebviewHeightRatio *string `json:"webview_height_ratio,omitempty"`
+	Payload            *string `json:"payload,omitempty"`
+	CTAs               []CTA   `json:"call_to_actions,omitempty"`
 }
