@@ -38,7 +38,7 @@ type Entry struct {
 	PassThreadControl    *PassThreadControl    `json:"pass_thread_control,omitempty"`
 	TakeThreadControl    *TakeThreadControl    `json:"take_thread_control,omitempty"`
 	RequestThreadControl *RequestThreadControl `json:"request_thread_control,omitempty"`
-	Standby              []*Entry              `json:"standby,omitempty"`
+	Standby              []Entry               `json:"standby,omitempty"`
 }
 
 // MessageEvent encapsulates common info plus the specific type of callback
