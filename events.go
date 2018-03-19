@@ -25,23 +25,65 @@ type MessageOpts struct {
 	Timestamp int64 `json:"timestamp"`
 }
 
+// Entry represents an element of the incoming data
+// https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/#entry
+type Entry struct {
+	MessageOpts
+	Message              *MessageEcho          `json:"message,omitempty"`
+	Delivery             *Delivery             `json:"delivery,omitempty"`
+	Postback             *Postback             `json:"postback,omitempty"`
+	Optin                *Optin                `json:"optin,empty"`
+	Read                 *Read                 `json:"read,omitempty"`
+	AppRoles             *AppRoles             `json:"app_roles,omitempty"`
+	PassThreadControl    *PassThreadControl    `json:"pass_thread_control,omitempty"`
+	TakeThreadControl    *TakeThreadControl    `json:"take_thread_control,omitempty"`
+	RequestThreadControl *RequestThreadControl `json:"request_thread_control,omitempty"`
+	Standby              []*Entry              `json:"standby,omitempty"`
+}
+
 // MessageEvent encapsulates common info plus the specific type of callback
 // being received.
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference#format
 type MessageEvent struct {
 	Event
-	Messaging []struct {
-		MessageOpts
-		Message  *MessageEcho `json:"message,omitempty"`
-		Delivery *Delivery    `json:"delivery,omitempty"`
-		Postback *Postback    `json:"postback,omitempty"`
-		Optin    *Optin       `json:"optin,empty"`
-		Read     *Read        `json:"read,omitempty"`
-	} `json:"messaging"`
+	Messaging []Entry `json:"messaging"`
 }
 
-// ReceivedMessage contains message specific information included with an echo
-// callback.
+// AppRole is a specific type for AppRoles
+type AppRole string
+
+// Valid appRoles
+const (
+	AppRolePrimaryReceiver AppRole = "primary_receiver"
+	AppRolePersistentMenu  AppRole = "persistent_menu"
+)
+
+// RequestThreadControl This event will be sent when a page admin changes the role of your application
+// https://developers.facebook.com/docs/messenger-platform/handover-protocol/request-thread-control
+type RequestThreadControl struct {
+	RequestedOwnerAppID string `json:"requested_owner_app_id"`
+	Metadata            string `json:"metadata"`
+}
+
+// PassThreadControl represents a thread ownership pass event
+// https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control
+type PassThreadControl struct {
+	NewOwnerAppID string `json:"new_owner_app_id"`
+	Metadata      string `json:"metadata"`
+}
+
+// TakeThreadControl represents a thread ownership take event
+// https://developers.facebook.com/docs/messenger-platform/handover-protocol/take-thread-control
+type TakeThreadControl struct {
+	PreviousOwnerAppID string `json:"previous_owner_app_id"`
+	Metadata           string `json:"metadata"`
+}
+
+// AppRoles represents a slice of AppRole for specific page(s)
+// https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_handovers#app_roles
+type AppRoles map[string][]AppRole
+
+// ReceivedMessage contains message specific information included with an echo callback.
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-echo
 type ReceivedMessage struct {
 	ID          string             `json:"mid"`
@@ -53,7 +95,7 @@ type ReceivedMessage struct {
 	Metadata    *string            `json:"metadata,omitempty"`
 }
 
-// QuickReplyPayload2 contains content specific to a quick reply.
+// QuickReplyPayload contains content specific to a quick reply.
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference/message
 type QuickReplyPayload struct {
 	Payload string
