@@ -61,21 +61,21 @@ const (
 // RequestThreadControl This event will be sent when a page admin changes the role of your application
 // https://developers.facebook.com/docs/messenger-platform/handover-protocol/request-thread-control
 type RequestThreadControl struct {
-	RequestedOwnerAppID string `json:"requested_owner_app_id"`
+	RequestedOwnerAppID int64  `json:"requested_owner_app_id"`
 	Metadata            string `json:"metadata"`
 }
 
 // PassThreadControl represents a thread ownership pass event
 // https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control
 type PassThreadControl struct {
-	NewOwnerAppID string `json:"new_owner_app_id"`
+	NewOwnerAppID int64  `json:"new_owner_app_id"`
 	Metadata      string `json:"metadata"`
 }
 
 // TakeThreadControl represents a thread ownership take event
 // https://developers.facebook.com/docs/messenger-platform/handover-protocol/take-thread-control
 type TakeThreadControl struct {
-	PreviousOwnerAppID string `json:"previous_owner_app_id"`
+	PreviousOwnerAppID int64  `json:"previous_owner_app_id"`
 	Metadata           string `json:"metadata"`
 }
 
