@@ -1,12 +1,15 @@
 package messenger
 
+// ContentType is a specific string type
 type ContentType string
 
+// Content types
 const (
 	ContentTypeText     ContentType = "text"
 	ContentTypeLocation ContentType = "location"
 )
 
+// SendMessage ...
 type SendMessage struct {
 	Text         string       `json:"text,omitempty"`
 	Attachment   *Attachment  `json:"attachment,omitempty"`
@@ -14,6 +17,7 @@ type SendMessage struct {
 	Metadata     string       `json:"metadata,omitempty"`
 }
 
+// QuickReply ...
 type QuickReply struct {
 	ContentType ContentType `json:"content_type"`
 	Title       string      `json:"title,omitempty"`
@@ -30,6 +34,8 @@ type Recipient struct {
 
 // NotificationType describes the behavior phone will execute after receiving the message
 type NotificationType string
+
+// MessagingType ...
 type MessagingType string
 
 const (
@@ -49,6 +55,7 @@ const (
 	MessagingTypeNonPromotionalSubscription MessagingType = "NON_PROMOTIONAL_SUBSCRIPTION"
 )
 
+// MessageQuery ...
 type MessageQuery struct {
 	Recipient        Recipient        `json:"recipient"`
 	Message          *SendMessage     `json:"message,omitempty"`
