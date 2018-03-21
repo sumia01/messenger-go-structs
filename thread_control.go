@@ -1,5 +1,19 @@
 package messenger
 
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+
+	"github.com/pkg/errors"
+)
+
+// ThreadControl URLs
+var (
+	TakeThreadControlURL = GraphAPI + "/" + GraphAPIVersion + "/me/take_thread_control"
+	PassThreadControlURL = GraphAPI + "/" + GraphAPIVersion + "/me/pass_thread_control"
+)
+
 // PassThreadControl represents a Pass thread handover control request content
 // https://developers.facebook.com/docs/messenger-platform/handover-protocol/pass-thread-control
 type PassThreadControl struct {
@@ -26,4 +40,45 @@ type RequestThreadControl struct {
 		ID string `json:"id"`
 	} `json:"recipient"`
 	Metadata string `json:"metadata,omitempty"`
+}
+
+// PassThread send request to graph api with given data and return error
+func PassThread(targetAppID int64, recipient, metadata, accessToken string) error {
+	data := PassThreadControl{
+		TargetAppID: targetAppID,
+		Metadata:    metadata,
+	}
+	data.Recipient.ID = recipient
+
+	url := fmt.Sprintf(PassThreadControlURL+"&access_token=%v", accessToken)
+	enc, err := json.Marshal(data)
+	if err != nil {
+		return errors.Wrapf(err, "PassThread - json.Marshal(%v)", data)
+	}
+
+	err = doThreadRequest("POST", url, bytes.NewReader(enc))
+	if err != nil {
+		return errors.Wrap(err, "PassThread")
+	}
+	return nil
+}
+
+// TakeThread send request to graph api with given data and return error
+func TakeThread(recipient, metadata, accessToken string) error {
+	data := TakeThreadControl{
+		Metadata: metadata,
+	}
+	data.Recipient.ID = recipient
+
+	url := fmt.Sprintf(TakeThreadControlURL+"&access_token=%v", accessToken)
+	enc, err := json.Marshal(data)
+	if err != nil {
+		return errors.Wrapf(err, "TakeThread - json.Marshal(%v)", data)
+	}
+
+	err = doThreadRequest("POST", url, bytes.NewReader(enc))
+	if err != nil {
+		return errors.Wrap(err, "TakeThread")
+	}
+	return nil
 }

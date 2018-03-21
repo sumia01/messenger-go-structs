@@ -10,7 +10,10 @@ const (
 )
 
 // GraphAPI specifies host used for API requests
-var GraphAPI = "https://graph.facebook.com"
+var (
+	GraphAPI        = "https://graph.facebook.com"
+	GraphAPIVersion = "v2.12"
+)
 
 type (
 	// MessageReceivedHandler is called when a new message is received

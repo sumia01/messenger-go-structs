@@ -7,6 +7,21 @@ type ContentType string
 const (
 	ContentTypeText     ContentType = "text"
 	ContentTypeLocation ContentType = "location"
+
+	// NotificationTypeRegular will emit a sound/vibration and a phone notification
+	NotificationTypeRegular NotificationType = "REGULAR"
+	// NotificationTypeSilentPush will just emit a phone notification
+	NotificationTypeSilentPush NotificationType = "SILENT_PUSH"
+	// NotificationTypeNoPush will not emit sound/vibration nor a phone notification
+	NotificationTypeNoPush NotificationType = "NO_PUSH"
+	// MessagingTypeResponse described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeResponse MessagingType = "RESPONSE"
+	// MessagingTypeUpdate described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeUpdate MessagingType = "UPDATE"
+	// MessagingTypeMessageTag described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeMessageTag MessagingType = "MESSAGE_TAG"
+	// MessagingTypeNonPromotionalSubscription described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
+	MessagingTypeNonPromotionalSubscription MessagingType = "NON_PROMOTIONAL_SUBSCRIPTION"
 )
 
 // SendMessage ...
@@ -37,23 +52,6 @@ type NotificationType string
 
 // MessagingType ...
 type MessagingType string
-
-const (
-	// NotificationTypeRegular will emit a sound/vibration and a phone notification
-	NotificationTypeRegular NotificationType = "REGULAR"
-	// NotificationTypeSilentPush will just emit a phone notification
-	NotificationTypeSilentPush NotificationType = "SILENT_PUSH"
-	// NotificationTypeNoPush will not emit sound/vibration nor a phone notification
-	NotificationTypeNoPush NotificationType = "NO_PUSH"
-	// MessagingTypeResponse described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
-	MessagingTypeResponse MessagingType = "RESPONSE"
-	// MessagingTypeUpdate described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
-	MessagingTypeUpdate MessagingType = "UPDATE"
-	// MessagingTypeMessageTag described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
-	MessagingTypeMessageTag MessagingType = "MESSAGE_TAG"
-	// MessagingTypeNonPromotionalSubscription described here: https://developers.facebook.com/docs/messenger-platform/send-messages#message_types
-	MessagingTypeNonPromotionalSubscription MessagingType = "NON_PROMOTIONAL_SUBSCRIPTION"
-)
 
 // MessageQuery ...
 type MessageQuery struct {

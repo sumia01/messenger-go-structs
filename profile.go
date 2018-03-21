@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -24,11 +23,11 @@ type Profile struct {
 func (p *Profile) GetProfile(userID string, accessToken string, url string) error {
 	parameters := "fields=first_name,last_name,profile_pic,locale,timezone,gender"
 	if url == "" {
-		url = fmt.Sprintf(GraphAPI+"/v2.6/%s?%s&access_token=%s", userID, parameters, accessToken)
+		url = fmt.Sprintf("%v/%v/%v?%v&access_token=%v", GraphAPI, GraphAPIVersion, userID, parameters, accessToken)
 	} else {
-		url = fmt.Sprintf(url+"/%s?%s&access_token=%s", userID, parameters, accessToken)
+		url = fmt.Sprintf(url+"/%v?%v&access_token=%v", userID, parameters, accessToken)
 	}
-	resp, err := p.doRequest("GET", url, nil)
+	resp, err := doRequest("GET", url, nil)
 	if err != nil {
 		return err
 	}
@@ -59,14 +58,4 @@ func (p *Profile) GetProfile(userID string, accessToken string, url string) erro
 type accountLinking struct {
 	//Recipient is Page Scoped ID
 	Recipient string `json:"recipient"`
-}
-
-func (p *Profile) doRequest(method string, url string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(method, url, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	return http.DefaultClient.Do(req)
 }
