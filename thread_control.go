@@ -49,16 +49,14 @@ func PassThread(targetAppID int64, recipient, metadata, accessToken string) erro
 		Metadata:    metadata,
 	}
 	data.Recipient.ID = recipient
-
-	url := fmt.Sprintf(PassThreadControlURL+"&access_token=%v", accessToken)
+	url := fmt.Sprintf(PassThreadControlURL+"?access_token=%v", accessToken)
 	enc, err := json.Marshal(data)
 	if err != nil {
-		return errors.Wrapf(err, "PassThread - json.Marshal(%v)", data)
+		return errors.Wrapf(err, "PassThread - json.Marshal(%v), URL: %v", data, url)
 	}
-
 	err = doThreadRequest("POST", url, bytes.NewReader(enc))
 	if err != nil {
-		return errors.Wrap(err, "PassThread")
+		return errors.Wrapf(err, "PassThread - sent: %v", string(enc))
 	}
 	return nil
 }
@@ -70,7 +68,7 @@ func TakeThread(recipient, metadata, accessToken string) error {
 	}
 	data.Recipient.ID = recipient
 
-	url := fmt.Sprintf(TakeThreadControlURL+"&access_token=%v", accessToken)
+	url := fmt.Sprintf(TakeThreadControlURL+"?access_token=%v", accessToken)
 	enc, err := json.Marshal(data)
 	if err != nil {
 		return errors.Wrapf(err, "TakeThread - json.Marshal(%v)", data)
